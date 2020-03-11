@@ -37,9 +37,6 @@ describe 'node_cookbook::default' do
     it 'should install pm2 via npm' do
       expect(chef_run).to install_nodejs_npm('pm2')
     end
-    it 'should update source list' do
-      expect(chef_run).to update_apt_update('updated_sources')
-    end
 
     it 'should create a proxy.conf templates in /etc/nginx/sites-available' do
       expect(chef_run).to create_template "/etc/nginx/sites-available/proxy.conf"
