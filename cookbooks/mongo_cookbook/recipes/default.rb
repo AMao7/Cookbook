@@ -16,28 +16,21 @@ package "mongodb-org" do
   action :upgrade
 end
 
-
-template '/etc/mongod.conf' do
-  variables port: node['mongodb']['port'], bind_ip: node['mongodb']['bind_ip']
-  source 'mongod.conf.erb'
-  mode '777'
-  owner 'root'
-  group 'root'
-  notifies :restart, 'service[mongod]'
-end
-
-template '/lib/systemd/system/mongod.service' do
+template /lib/systemd/system/mongod.service do
   source 'mongod.service.erb'
-  mode '777'
+  mode '0600'
   owner 'root'
   group 'root'
   notifies :restart, 'service[mongod]'
 end
 
-service "mongod" do
-  supports status: true, restart: true, reload: true
-  action [:enable, :start]
-end
+#template /etc/mongod.conf do
+#  source 'mongod.conf.erb'
+#  mode '0600'
+#  owner 'root'
+#  group 'root'
+#  notifies :restart, 'service[mongod]'
+#end
 
 
 
